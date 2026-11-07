@@ -49,22 +49,32 @@ function Set-UserPolicy($cfg) {
     if (-not (Test-Path $Scr)) { Write-Log 'policy: screensaver file not present yet, skipped'; return }
     $timeout = [string]([int]$cfg.timeoutSec)
     $secure  = if ($cfg.secure -eq $false) { '0' } else { '1' }
-    $n = 0
-    Get-ChildItem Registry::HKEY_USERS | Where-Object { $_.PSChildName -match '^S-1-(5-21|12-1)-[\d-]+$' } | ForEach-Object {
-        $k = "Registry::HKEY_USERS\$($_.PSChildName)\Software\Policies\Microsoft\Windows\Control Panel\Desktop"
+    $names = 'ScreenSaveActive', 'ScreenSaverIsSecure', 'ScreenSaveTimeOut', 'SCRNSAVE.EXE'
+    $sids = @(Get-ChildItem Registry::HKEY_USERS | Where-Object { $_.PSChildName -match '^S-1-(5-21|12-1)-[\d-]+$' } | ForEach-Object { $_.PSChildName })
+    if ($sids.Count -eq 0) { Write-Log 'policy: nobody signed in'; return }
+    # Values for the live session (read by NMS-Awareness.scr /apply)
+    Write-TextAtomic (Join-Path $Root 'session.txt') @("timeoutSec=$timeout", "secure=$secure", "scr=$Scr")
+
+    # 1. Windows reads the policy only at sign-in and refuses live changes while it exists,
+    #    so lift it for a few seconds, 2. push the values into the live session, 3. put it back.
+    foreach ($sid in $sids) {
+        $k = "Registry::HKEY_USERS\$sid\Software\Policies\Microsoft\Windows\Control Panel\Desktop"
+        if (Test-Path $k) { foreach ($n in $names) { Remove-ItemProperty -Path $k -Name $n -ErrorAction SilentlyContinue } }
+    }
+    Invoke-SessionApply
+    foreach ($sid in $sids) {
+        $k = "Registry::HKEY_USERS\$sid\Software\Policies\Microsoft\Windows\Control Panel\Desktop"
         if (-not (Test-Path $k)) { New-Item -Path $k -Force | Out-Null }
         New-ItemProperty -Path $k -Name 'ScreenSaveActive'    -Value '1'      -PropertyType String -Force | Out-Null
         New-ItemProperty -Path $k -Name 'ScreenSaverIsSecure' -Value $secure  -PropertyType String -Force | Out-Null
         New-ItemProperty -Path $k -Name 'ScreenSaveTimeOut'   -Value $timeout -PropertyType String -Force | Out-Null
         New-ItemProperty -Path $k -Name 'SCRNSAVE.EXE'        -Value $Scr     -PropertyType String -Force | Out-Null
         # "Prevent changing screen saver": the Screen Saver Settings page can't be opened.
-        $s = "Registry::HKEY_USERS\$($_.PSChildName)\Software\Microsoft\Windows\CurrentVersion\Policies\System"
+        $s = "Registry::HKEY_USERS\$sid\Software\Microsoft\Windows\CurrentVersion\Policies\System"
         if (-not (Test-Path $s)) { New-Item -Path $s -Force | Out-Null }
         New-ItemProperty -Path $s -Name 'NoDispScrSavPage' -Value 1 -PropertyType DWord -Force | Out-Null
-        $n++
     }
-    Write-Log "policy: applied to $n signed-in user(s), timeout ${timeout}s, password on resume=$secure, settings locked"
-    if ($n -gt 0) { Invoke-SessionApply }
+    Write-Log "policy: applied to $($sids.Count) signed-in user(s), timeout ${timeout}s, password on resume=$secure, settings locked"
 }
 
 # Task that runs in each signed-in user's session and pushes the policy into the live session
@@ -83,7 +93,12 @@ function Invoke-SessionApply {
                 -Description 'NMS Security Awareness: applies the screensaver settings to the signed-in session.' -Force | Out-Null
         }
         Start-ScheduledTask -TaskPath $tp -TaskName $tn
-        Write-Log 'session apply: started'
+        for ($i = 0; $i -lt 30; $i++) {
+            Start-Sleep -Seconds 1
+            if ((Get-ScheduledTask -TaskPath $tp -TaskName $tn).State -ne 'Running') { break }
+        }
+        $info = Get-ScheduledTaskInfo -TaskPath $tp -TaskName $tn
+        Write-Log "session apply: result $($info.LastTaskResult)"
     } catch { Write-Log "session apply failed: $($_.Exception.Message)" }
 }
 
