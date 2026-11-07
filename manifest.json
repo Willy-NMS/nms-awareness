@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-06.1955",
+  "version": "2026-11-06.2009",
   "settings": {
     "slideSeconds": 15,
     "company": "Network Management Solutions",
@@ -23,7 +23,7 @@
   "screensaver": {
     "version": "1.1.0.0",
     "file": "agent/NMS-Awareness.bin",
-    "sha256": "ab6e537fcfabe32d3b392bb9d589269726733ca873db6ba6c6cb347896f667ec"
+    "sha256": "d842a16aff0cbe8ebd1c122a805e049db4a4ab2a0a05771bdbebdb35256a7e3d"
   },
   "agent": {
     "file": "agent/Sync-NmsAwareness.ps1",
@@ -264,6 +264,260 @@
         null
       ],
       "url": "https://willy-nms.github.io/nms-awareness/learn/en/passwords.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "phishing",
+      "lang": "es",
+      "title": "Piense antes de hacer clic",
+      "bullets": [
+        "Los correos de phishing se hacen pasar por alguien de confianza para robar contraseñas, dinero o datos.",
+        "Desconfíe de la urgencia, las amenazas, los premios o lo que no esperaba.",
+        "Si tiene dudas, no haga clic. Llame al remitente a un número que ya conozca."
+      ],
+      "art": "envelopes",
+      "artText": [
+        null
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/es/phishing.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "spoofing",
+      "lang": "es",
+      "title": "Suplantación: el nombre no es el remitente",
+      "bullets": [
+        "Cualquiera puede poner cualquier nombre, como \"Soporte de Microsoft\" o el nombre de su jefe.",
+        "Revise siempre la dirección de correo real, no solo el nombre.",
+        "Las direcciones falsas cambian letras: micros0ft.com, rnicrosoft.com, paypa1.com."
+      ],
+      "art": "spoof",
+      "artText": [
+        "De: Soporte de Microsoft 365",
+        "<security@micros0ft-alerts.co>",
+        "Asunto: Su contraseña vence hoy",
+        "Verificar ahora"
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/es/spoofing.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "bank-change",
+      "lang": "es",
+      "title": "¿Nuevos datos bancarios? Llame para verificar",
+      "bullets": [
+        "Los estafadores falsifican o roban correos de proveedores y mandan \"nuevos\" datos de banco o de transferencia.",
+        "Nunca cambie los datos de pago solo por un correo o un PDF.",
+        "Llame al proveedor al número que ya tiene, no al que viene en el correo."
+      ],
+      "art": "bank",
+      "artText": [
+        "FACTURA",
+        "NUEVOS DATOS BANCARIOS",
+        "Llame para verificar"
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/es/bank-change.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "gift-cards",
+      "lang": "es",
+      "title": "Pedir tarjetas de regalo es una estafa",
+      "bullets": [
+        "\"Estoy en una reunión, compre tarjetas de regalo y mándeme los códigos\" es una estafa clásica.",
+        "Ningún jefe, empresa ni agencia del gobierno pide pagos con tarjetas de regalo.",
+        "Verifique en persona o por teléfono antes de comprar nada."
+      ],
+      "art": "giftcard",
+      "artText": [
+        "¿Está ocupado? Necesito tarjetas de regalo para un cliente. Envíeme los códigos."
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/es/gift-cards.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "mfa-codes",
+      "lang": "es",
+      "title": "Nunca comparta su código",
+      "bullets": [
+        "Los códigos de verificación son el último candado de su cuenta. Nunca se los lea a nadie.",
+        "Ningún banco, Microsoft ni soporte técnico real le va a pedir un código.",
+        "¿Le llegó un aviso de inicio de sesión que usted no pidió? Rechácelo y avise a NMS."
+      ],
+      "art": "mfa",
+      "artText": [
+        "Su código de verificación",
+        "No lo comparta",
+        "¿Aprobar inicio?",
+        "Denegar",
+        "Aprobar"
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/es/mfa-codes.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "fake-login",
+      "lang": "es",
+      "title": "Revise el enlace antes de iniciar sesión",
+      "bullets": [
+        "Las páginas falsas de inicio de sesión son idénticas a Microsoft 365, los bancos o las compañías de envíos.",
+        "Pase el mouse sobre el enlace y lea la dirección real antes de hacer clic.",
+        "Inicie sesión solo en sitios que usted abrió, nunca desde un enlace de un correo."
+      ],
+      "art": "lock",
+      "artText": [
+        null
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/es/fake-login.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "attachments",
+      "lang": "es",
+      "title": "¿Un adjunto inesperado? No lo abra",
+      "bullets": [
+        "Las facturas falsas, avisos de envío y mensajes de voz suelen esconder virus.",
+        "Tenga mucho cuidado con archivos .zip, .html e .iso y con los botones \"Habilitar contenido\".",
+        "¿No lo esperaba? Confirme primero con quien lo mandó."
+      ],
+      "art": "attachment",
+      "artText": [
+        "Factura_8841.zip"
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/es/attachments.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "fake-fix",
+      "lang": "es",
+      "title": "Páginas falsas de \"verificar\" o \"arreglar\"",
+      "bullets": [
+        "Algunas páginas le piden presionar Windows + R y pegar un comando para \"verificar\" o \"arreglar\" algo.",
+        "Es una trampa que instala virus. Cierre la página.",
+        "Ningún sitio web real le pide ejecutar comandos en su computadora."
+      ],
+      "art": "warning",
+      "artText": [
+        "Verifique que es humano",
+        "1. Presione Windows + R    2. Presione Ctrl + V    3. Presione Enter"
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/es/fake-fix.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "texts-calls",
+      "lang": "es",
+      "title": "Los textos y las llamadas también pueden ser estafas",
+      "bullets": [
+        "Los textos falsos de paquetes, peajes o alertas del banco lo llevan a un enlace.",
+        "El número que aparece en la llamada se puede falsificar. Cuelgue y llame al número oficial.",
+        "Nunca dé contraseñas, códigos ni números de tarjeta por teléfono."
+      ],
+      "art": "phone",
+      "artText": [
+        "USPS: Su paquete está retenido. Pague $1.99 aquí: usps-redelivery.info",
+        "Alerta del banco: tarjeta bloqueada. Llame ya.",
+        "El número se puede falsificar"
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/es/texts-calls.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "report-it",
+      "lang": "es",
+      "title": "¿Algo se ve raro? Repórtelo",
+      "bullets": [
+        "Use el botón Reportar de Outlook o llame a NMS. No se lo reenvíe a sus compañeros.",
+        "¿Hizo clic por error? Avísenos enseguida. Los minutos cuentan.",
+        "Nunca va a tener problemas por reportar."
+      ],
+      "art": "shield",
+      "artText": [
+        null
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/es/report-it.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "passwords",
+      "lang": "es",
+      "title": "Use contraseñas fuertes y únicas",
+      "bullets": [
+        "Use una frase: cuatro o más palabras al azar, de 16 caracteres o más.",
+        "Nunca use su contraseña del trabajo en ningún otro lugar.",
+        "Use un administrador de contraseñas y active la verificación en dos pasos."
+      ],
+      "art": "password",
+      "artText": [
+        "INGRESE SU CONTRASEÑA"
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/es/passwords.html",
       "clients": "*",
       "exclude": [
         null
