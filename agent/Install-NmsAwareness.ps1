@@ -6,7 +6,7 @@
   - C:\ProgramData\NMS\Awareness (SYSTEM/Admins full, Users read only)
   - config.json with the content site, client code, language and timeout
   - downloads Sync-NmsAwareness.ps1 from the content site (hash checked) and runs it
-  - scheduled task "\NMS\NMS Awareness Sync" as SYSTEM: at startup, at every sign-in and daily
+  - scheduled task "\NMS\NMS Awareness Sync" as SYSTEM: at startup, at every sign-in and every hour
   The screensaver starts after the timeout and asks for the Windows password when the user comes back.
 
   NinjaOne: parameters can be passed as script arguments or as script variables
@@ -60,7 +60,7 @@ $ps = "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe"
 $action = New-ScheduledTaskAction -Execute $ps -Argument "-NoProfile -NonInteractive -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$sync`""
 $t1 = New-ScheduledTaskTrigger -AtStartup; $t1.Delay = 'PT2M'
 $t2 = New-ScheduledTaskTrigger -AtLogOn;   $t2.Delay = 'PT30S'
-$t3 = New-ScheduledTaskTrigger -Daily -At '7:00'; $t3.RandomDelay = 'PT2H'
+$t3 = New-ScheduledTaskTrigger -Once -At (Get-Date).Date.AddMinutes((Get-Random -Maximum 59)) -RepetitionInterval (New-TimeSpan -Hours 1) -RepetitionDuration (New-TimeSpan -Days 3650)   # hourly: re-enforces the settings
 $principal = New-ScheduledTaskPrincipal -UserId 'SYSTEM' -LogonType ServiceAccount -RunLevel Highest
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable -ExecutionTimeLimit (New-TimeSpan -Minutes 15) -MultipleInstances IgnoreNew
 Register-ScheduledTask -TaskName 'NMS Awareness Sync' -TaskPath '\NMS\' -Action $action -Trigger $t1, $t2, $t3 -Principal $principal -Settings $settings `

@@ -57,9 +57,34 @@ function Set-UserPolicy($cfg) {
         New-ItemProperty -Path $k -Name 'ScreenSaverIsSecure' -Value $secure  -PropertyType String -Force | Out-Null
         New-ItemProperty -Path $k -Name 'ScreenSaveTimeOut'   -Value $timeout -PropertyType String -Force | Out-Null
         New-ItemProperty -Path $k -Name 'SCRNSAVE.EXE'        -Value $Scr     -PropertyType String -Force | Out-Null
+        # "Prevent changing screen saver": the Screen Saver Settings page can't be opened.
+        $s = "Registry::HKEY_USERS\$($_.PSChildName)\Software\Microsoft\Windows\CurrentVersion\Policies\System"
+        if (-not (Test-Path $s)) { New-Item -Path $s -Force | Out-Null }
+        New-ItemProperty -Path $s -Name 'NoDispScrSavPage' -Value 1 -PropertyType DWord -Force | Out-Null
         $n++
     }
-    Write-Log "policy: applied to $n signed-in user(s), timeout ${timeout}s, password on resume=$secure"
+    Write-Log "policy: applied to $n signed-in user(s), timeout ${timeout}s, password on resume=$secure, settings locked"
+    if ($n -gt 0) { Invoke-SessionApply }
+}
+
+# Task that runs in each signed-in user's session and pushes the policy into the live session
+# (Windows otherwise reads it only at sign-in).
+function Invoke-SessionApply {
+    try {
+        $tp = '\NMS\'; $tn = 'NMS Awareness Apply'
+        $t = Get-ScheduledTask -TaskPath $tp -TaskName $tn -ErrorAction SilentlyContinue
+        if (-not $t -or $t.Actions[0].Execute -ne $Scr) {
+            $users = (New-Object System.Security.Principal.SecurityIdentifier('S-1-5-32-545')).Translate([System.Security.Principal.NTAccount]).Value
+            $action = New-ScheduledTaskAction -Execute $Scr -Argument '/apply'
+            $trig = New-ScheduledTaskTrigger -AtLogOn; $trig.Delay = 'PT1M'
+            $pr = New-ScheduledTaskPrincipal -GroupId $users -RunLevel Limited
+            $set = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -ExecutionTimeLimit (New-TimeSpan -Minutes 2) -MultipleInstances IgnoreNew
+            Register-ScheduledTask -TaskPath $tp -TaskName $tn -Action $action -Trigger $trig -Principal $pr -Settings $set `
+                -Description 'NMS Security Awareness: applies the screensaver settings to the signed-in session.' -Force | Out-Null
+        }
+        Start-ScheduledTask -TaskPath $tp -TaskName $tn
+        Write-Log 'session apply: started'
+    } catch { Write-Log "session apply failed: $($_.Exception.Message)" }
 }
 
 try {

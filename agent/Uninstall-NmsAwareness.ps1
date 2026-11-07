@@ -9,7 +9,7 @@ $Root = Join-Path $env:ProgramData 'NMS\Awareness'
 $rel = 'Software\Policies\Microsoft\Windows\Control Panel\Desktop'
 $names = 'ScreenSaveActive', 'ScreenSaverIsSecure', 'ScreenSaveTimeOut', 'SCRNSAVE.EXE'
 
-Unregister-ScheduledTask -TaskName 'NMS Awareness Sync' -TaskPath '\NMS\' -Confirm:$false -ErrorAction SilentlyContinue
+foreach ($tn in 'NMS Awareness Sync', 'NMS Awareness Apply') { Unregister-ScheduledTask -TaskName $tn -TaskPath '\NMS\' -Confirm:$false -ErrorAction SilentlyContinue }
 Get-Process -Name 'NMS-Awareness*' -ErrorAction SilentlyContinue | Stop-Process -Force
 
 function Clear-Policy([string]$hiveRoot) {
@@ -17,7 +17,10 @@ function Clear-Policy([string]$hiveRoot) {
     if (Test-Path $k) {
         $p = Get-ItemProperty $k
         # Only remove values that point to our screensaver (leave a client's own GPO alone)
-        if ($p.'SCRNSAVE.EXE' -like '*NMS\Awareness*') { foreach ($n in $names) { Remove-ItemProperty -Path $k -Name $n -ErrorAction SilentlyContinue } ; return $true }
+        if ($p.'SCRNSAVE.EXE' -like '*NMS\Awareness*') {
+            foreach ($n in $names) { Remove-ItemProperty -Path $k -Name $n -ErrorAction SilentlyContinue }
+            Remove-ItemProperty -Path "Registry::$hiveRoot\Software\Microsoft\Windows\CurrentVersion\Policies\System" -Name 'NoDispScrSavPage' -ErrorAction SilentlyContinue
+            return $true }
     }
     return $false
 }
