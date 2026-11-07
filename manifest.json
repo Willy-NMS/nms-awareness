@@ -1,5 +1,5 @@
 {
-    "version":  "2026-11-07.0951",
+    "version":  "2026-11-07.0953",
     "settings":  {
                      "slideSeconds":  15,
                      "company":  "Network Management Solutions",
@@ -15,6 +15,17 @@
                                    "dcHibernate":  0,
                                    "lidAction":  0
                                },
+                     "powerByClient":  {
+                                           "Express Roofing Supply 1":  {
+                                                                            "dcDisplay":  40
+                                                                        },
+                                           "Express Roofing Supply 2":  {
+                                                                            "dcDisplay":  40
+                                                                        },
+                                           "Express Roofing Supply Corp.":  {
+                                                                                "dcDisplay":  40
+                                                                            }
+                                       },
                      "timeouts":  {
                                       "*":  5,
                                       "Express Roofing Supply 1":  30,
@@ -47,11 +58,11 @@
     "screensaver":  {
                         "version":  "1.2.0.0",
                         "file":  "agent/NMS-Awareness.bin",
-                        "sha256":  "19ec8bb6b76400d0a88f5a09a2a27d0bbc00eb81676103242c7634791434a7de"
+                        "sha256":  "83ad854b052c84930d00dbc760b8b7de7db9f63a11b4137b884eeb21bc80ebbd"
                     },
     "agent":  {
                   "file":  "agent/Sync-NmsAwareness.ps1",
-                  "sha256":  "c221eb7d6ea810c7f0f108b4cf7c9980898b2c99321f4c749c06600e27ec7353"
+                  "sha256":  "80b93782f93ba78f4dd01d08ec224ed4cae58e3d1f31313526f4b5df1ea55e5c"
               },
     "slides":  [
                    {

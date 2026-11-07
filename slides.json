@@ -5,6 +5,7 @@
     "phone": "305-477-0757",
     "website": "networkms.com",
     "power": { "exact": true, "acDisplay": 60, "acSleep": 0, "acHibernate": 0, "dcDisplay": 20, "dcSleep": 0, "dcHibernate": 0, "lidAction": 0 },
+    "powerByClient": { "Express Roofing Supply 1": { "dcDisplay": 40 }, "Express Roofing Supply 2": { "dcDisplay": 40 }, "Express Roofing Supply Corp.": { "dcDisplay": 40 } },
     "timeouts": { "*": 5, "Express Roofing Supply 1": 30, "Express Roofing Supply 2": 30, "Express Roofing Supply Corp.": 30 },
     "languages": { "*": "en", "Ace Home Health Care": "es", "Ace Home Healthcare": "es", "Mollinea Insurance": "es", "Century Metals Puerto Rico": "es", "Best Roof Metals": "es" },
     "labels": {

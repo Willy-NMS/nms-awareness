@@ -285,7 +285,14 @@ try {
     Get-ChildItem $Cache -File | Where-Object { -not $keep.ContainsKey($_.Name) } | Remove-Item -Force -ErrorAction SilentlyContinue
 
     Write-Log "content $($m.version): $($lines.Count) slide(s) for lang=$lang client=$client"
-    if (-not $NoPolicy) { Set-UserPolicy $cfg; Set-PowerMinimums $st.power }
+    # Power settings: general values, with per-organization changes from settings.powerByClient.
+    $pw = @{}
+    if ($st.power) { $st.power.PSObject.Properties | ForEach-Object { $pw[$_.Name] = $_.Value } }
+    if ($st.powerByClient -and $client) {
+        $o = $st.powerByClient.PSObject.Properties | Where-Object { $_.Name -eq $client } | Select-Object -First 1
+        if ($o) { $o.Value.PSObject.Properties | ForEach-Object { $pw[$_.Name] = $_.Value } }
+    }
+    if (-not $NoPolicy) { Set-UserPolicy $cfg; if ($pw.Count) { Set-PowerMinimums ([pscustomobject]$pw) } }
     exit 0
 }
 catch {
