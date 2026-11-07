@@ -1,5 +1,5 @@
 {
-    "version":  "2026-11-06.2153",
+    "version":  "2026-11-06.2155",
     "settings":  {
                      "slideSeconds":  15,
                      "company":  "Network Management Solutions",
@@ -9,7 +9,8 @@
                                        "*":  "en",
                                        "Ace Home Health Care":  "es",
                                        "Ace Home Healthcare":  "es",
-                                       "Mollinea Insurance":  "es"
+                                       "Mollinea Insurance":  "es",
+                                       "Century Metals Puerto Rico":  "es"
                                    },
                      "labels":  {
                                     "en":  {
@@ -29,7 +30,7 @@
     "screensaver":  {
                         "version":  "1.2.0.0",
                         "file":  "agent/NMS-Awareness.bin",
-                        "sha256":  "10db6e348b4a6e84554b8af7877c4c1e27328bcdbc8cad40f9ab26a40fc6dfc9"
+                        "sha256":  "628a42edcfe24fbae076ce5b934e543bf58c38ae211cb376bc9cdfaaada009d4"
                     },
     "agent":  {
                   "file":  "agent/Sync-NmsAwareness.ps1",
