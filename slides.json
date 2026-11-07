@@ -4,6 +4,7 @@
     "company": "Network Management Solutions",
     "phone": "305-477-0757",
     "website": "networkms.com",
+    "power": { "acDisplay": 20, "acSleep": 30, "dcDisplay": 20, "dcSleep": 0 },
     "languages": { "*": "en", "Ace Home Health Care": "es", "Ace Home Healthcare": "es", "Mollinea Insurance": "es", "Century Metals Puerto Rico": "es" },
     "labels": {
       "en": { "call": "Questions? Call NMS", "scan": "To read more about this topic,|SCAN THE QR CODE." },

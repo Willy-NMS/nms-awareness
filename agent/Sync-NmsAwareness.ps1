@@ -109,6 +109,42 @@ function Invoke-SessionApply {
     } catch { Write-Log "session apply failed: $($_.Exception.Message)" }
 }
 
+# Power: make sure the display stays on long enough to show the screensaver.
+# settings.power in the manifest = minutes {acDisplay, acSleep, dcDisplay, dcSleep}; 0 = never.
+# A time is only raised, never lowered; "never" (0) on the computer is left alone.
+function Set-PowerMinimums($p) {
+    if (-not $p) { return }
+    $video = '7516b95f-f776-4464-8c53-06167f40cc99'; $vidIdle = '3c0bc021-c8a8-4e07-a973-6b14cbcb2b7e'
+    $sleep = '238c9fa8-0aad-41ed-83f4-97be242c8f20'; $slpIdle = '29f6c1db-86da-48c5-9fdb-f2b67b1f44da'
+    $changes = @()
+    try {
+        $items = @(
+            @{ sub = $video; set = $vidIdle; ac = 'acDisplay'; dc = 'dcDisplay'; label = 'display' },
+            @{ sub = $sleep; set = $slpIdle; ac = 'acSleep'; dc = 'dcSleep'; label = 'sleep' })
+        foreach ($it in $items) {
+            # The last two hex values in the output are the current AC and DC values (works in any Windows language).
+            $hex = @(& powercfg.exe /q SCHEME_CURRENT $it.sub $it.set | Select-String ':\s*0x([0-9a-fA-F]+)\s*$' |
+                ForEach-Object { [Convert]::ToInt64($_.Matches[0].Groups[1].Value, 16) })
+            if ($hex.Count -lt 2) { continue }
+            $cur = @{ ac = $hex[-2]; dc = $hex[-1] }
+            foreach ($mode in 'ac', 'dc') {
+                $v = $p.($it[$mode]); if ($null -eq $v) { continue }
+                $want = [int64]$v * 60
+                $now = $cur[$mode]
+                $set = $false
+                if ($want -eq 0) { $set = ($now -ne 0) }                  # policy says never
+                elseif ($now -ne 0 -and $now -lt $want) { $set = $true }  # too short: raise it
+                if ($set) {
+                    $sw = if ($mode -eq 'ac') { '/setacvalueindex' } else { '/setdcvalueindex' }
+                    & powercfg.exe $sw SCHEME_CURRENT $it.sub $it.set $want | Out-Null
+                    $changes += "$mode $($it.label) $([int]($now/60))->$([int]($want/60))min"
+                }
+            }
+        }
+        if ($changes.Count) { & powercfg.exe /setactive SCHEME_CURRENT | Out-Null; Write-Log "power: $($changes -join ', ')" }
+    } catch { Write-Log "power settings failed: $($_.Exception.Message)" }
+}
+
 try {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     $cfg = Get-Content (Join-Path $Root 'config.json') -Raw -Encoding UTF8 | ConvertFrom-Json
@@ -200,7 +236,7 @@ try {
     Get-ChildItem $Cache -File | Where-Object { -not $keep.ContainsKey($_.Name) } | Remove-Item -Force -ErrorAction SilentlyContinue
 
     Write-Log "content $($m.version): $($lines.Count) slide(s) for lang=$lang client=$client"
-    if (-not $NoPolicy) { Set-UserPolicy $cfg }
+    if (-not $NoPolicy) { Set-UserPolicy $cfg; Set-PowerMinimums $st.power }
     exit 0
 }
 catch {

@@ -1,10 +1,16 @@
 {
-    "version":  "2026-11-06.2155",
+    "version":  "2026-11-07.0836",
     "settings":  {
                      "slideSeconds":  15,
                      "company":  "Network Management Solutions",
                      "phone":  "305-477-0757",
                      "website":  "networkms.com",
+                     "power":  {
+                                   "acDisplay":  20,
+                                   "acSleep":  30,
+                                   "dcDisplay":  20,
+                                   "dcSleep":  0
+                               },
                      "languages":  {
                                        "*":  "en",
                                        "Ace Home Health Care":  "es",
@@ -30,11 +36,11 @@
     "screensaver":  {
                         "version":  "1.2.0.0",
                         "file":  "agent/NMS-Awareness.bin",
-                        "sha256":  "628a42edcfe24fbae076ce5b934e543bf58c38ae211cb376bc9cdfaaada009d4"
+                        "sha256":  "66fb9800e7b2e0003b37ee871c11c76bdf22aa0c2fb1e35759c6d45b7f6ffad8"
                     },
     "agent":  {
                   "file":  "agent/Sync-NmsAwareness.ps1",
-                  "sha256":  "003b26b24e55fd5b879c002ac1002ce92a5b0216a2534663e2ece18f3f5c1809"
+                  "sha256":  "8de5796bbcdc97683643a48c69ea5c04248400d7967cd9ad08704b1d81336545"
               },
     "slides":  [
                    {
