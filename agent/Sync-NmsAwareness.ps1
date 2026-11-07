@@ -53,7 +53,9 @@ function Set-UserPolicy($cfg) {
         $mf = Join-Path $Root 'manifest.json'
         $tm = if (Test-Path $mf) { (Get-Content $mf -Raw -Encoding UTF8 | ConvertFrom-Json).settings.timeouts } else { $null }
         if ($tm) {
-            $hit = $tm.PSObject.Properties | Where-Object { $_.Name -eq [string]$cfg.client } | Select-Object -First 1
+            # 'host:<COMPUTERNAME>' (one computer) wins over the organization, which wins over '*'.
+            $hit = $tm.PSObject.Properties | Where-Object { $_.Name -eq "host:$env:COMPUTERNAME" } | Select-Object -First 1
+            if (-not $hit) { $hit = $tm.PSObject.Properties | Where-Object { $_.Name -eq [string]$cfg.client } | Select-Object -First 1 }
             if (-not $hit) { $hit = $tm.PSObject.Properties | Where-Object { $_.Name -eq '*' } | Select-Object -First 1 }
             if ($hit -and [int]$hit.Value -gt 0) { $timeout = [string]([int]$hit.Value * 60) }
         }
