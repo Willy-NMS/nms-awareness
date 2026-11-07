@@ -11,6 +11,8 @@
 
   NinjaOne: parameters can be passed as script arguments or as script variables
   (environment variables): client, language, timeoutMinutes, requirePassword, baseUrl.
+  client defaults to the NinjaOne organization name. The language for each organization is set centrally
+  in slides.json (settings.languages) and applied on every daily sync. Servers are skipped.
 
 .EXAMPLE
   Install-NmsAwareness.ps1 -Client ACE -Language es
@@ -28,7 +30,10 @@ if (-not $Language) { $Language = 'en' }
 if ($TimeoutMinutes -le 0) { $TimeoutMinutes = if ($env:timeoutMinutes) { [int]$env:timeoutMinutes } else { 5 } }
 $secure = -not ($RequirePassword -match '^(0|false|no)$')
 $Language = $Language.ToLowerInvariant()
-$Client = ([string]$Client).Trim().ToUpperInvariant()
+if (-not $Client) { $Client = $env:NINJA_ORGANIZATION_NAME }   # NinjaOne sets this for every script
+$Client = ([string]$Client).Trim()
+$os = Get-CimInstance Win32_OperatingSystem
+if ($os.ProductType -ne 1 -and -not $env:allowServers) { Write-Output "Skipped: $($os.Caption) is a server."; exit 0 }
 
 $Root = Join-Path $env:ProgramData 'NMS\Awareness'
 New-Item -ItemType Directory -Force (Join-Path $Root 'cache') | Out-Null

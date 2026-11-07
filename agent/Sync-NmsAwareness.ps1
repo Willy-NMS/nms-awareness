@@ -83,6 +83,14 @@ try {
     }
     $m = Get-Content $mfPath -Raw -Encoding UTF8 | ConvertFrom-Json
 
+    # Language: the central list in the manifest (by NinjaOne organization) wins over the install value.
+    $map = $m.settings.languages
+    if ($map -and $client) {
+        $hit = $map.PSObject.Properties | Where-Object { $_.Name -eq $client } | Select-Object -First 1
+        if ($hit) { $lang = [string]$hit.Value }
+        elseif ($map.'*') { $lang = [string]$map.'*' }
+    }
+
     $keep = @{}
     # Logo
     $logoName = ''
