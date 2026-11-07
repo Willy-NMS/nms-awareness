@@ -1,5 +1,5 @@
 {
-    "version":  "2026-11-07.0840",
+    "version":  "2026-11-07.0844",
     "settings":  {
                      "slideSeconds":  15,
                      "company":  "Network Management Solutions",
@@ -12,7 +12,8 @@
                                    "acHibernate":  0,
                                    "dcDisplay":  20,
                                    "dcSleep":  0,
-                                   "dcHibernate":  0
+                                   "dcHibernate":  0,
+                                   "lidAction":  0
                                },
                      "languages":  {
                                        "*":  "en",
@@ -39,11 +40,11 @@
     "screensaver":  {
                         "version":  "1.2.0.0",
                         "file":  "agent/NMS-Awareness.bin",
-                        "sha256":  "e439baed0ce5b5501a504f1e598672d68e5cf6f97e5add28f267328385623b78"
+                        "sha256":  "1e8b90a7f04c662531aac1a12c13c284068c7f28e24d0015010bf32e78403014"
                     },
     "agent":  {
                   "file":  "agent/Sync-NmsAwareness.ps1",
-                  "sha256":  "a47b04abaeee2c26a6ed9c379ca27d40fb1b9fbf8a4737009b0d4c38fd6b10ac"
+                  "sha256":  "07b04dfde51c2fb252236be1cee75e4415e4ab6912e272c2089d1f9a0398f2f5"
               },
     "slides":  [
                    {

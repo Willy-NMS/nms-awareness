@@ -144,6 +144,17 @@ function Set-PowerMinimums($p) {
                 }
             }
         }
+        # Lid close action (laptops): 0 = do nothing, 1 = sleep, 2 = hibernate, 3 = shut down.
+        if ($null -ne $p.lidAction) {
+            $btn = '4f971e89-eebd-4455-a8de-9e59040e7347'; $lid = '5ca83367-6e45-459f-a27b-476b1d01c936'
+            $hex = @(& powercfg.exe /q SCHEME_CURRENT $btn $lid | Select-String ':\s*0x([0-9a-fA-F]+)\s*$' |
+                ForEach-Object { [Convert]::ToInt64($_.Matches[0].Groups[1].Value, 16) })
+            if ($hex.Count -ge 2) {
+                $want = [int64]$p.lidAction
+                if ($hex[-2] -ne $want) { & powercfg.exe /setacvalueindex SCHEME_CURRENT $btn $lid $want | Out-Null; $changes += "ac lid $($hex[-2])->$want" }
+                if ($hex[-1] -ne $want) { & powercfg.exe /setdcvalueindex SCHEME_CURRENT $btn $lid $want | Out-Null; $changes += "dc lid $($hex[-1])->$want" }
+            }
+        }
         if ($changes.Count) { & powercfg.exe /setactive SCHEME_CURRENT | Out-Null; Write-Log "power: $($changes -join ', ')" }
     } catch { Write-Log "power settings failed: $($_.Exception.Message)" }
 }
