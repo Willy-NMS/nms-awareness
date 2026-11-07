@@ -1,0 +1,276 @@
+{
+  "version": "2026-11-06.1955",
+  "settings": {
+    "slideSeconds": 15,
+    "company": "Network Management Solutions",
+    "phone": "305-477-0757",
+    "website": "networkms.com",
+    "labels": {
+      "en": {
+        "call": "Questions? Call NMS",
+        "scan": "To read more about this topic,|SCAN THE QR CODE."
+      },
+      "es": {
+        "call": "¿Preguntas? Llame a NMS",
+        "scan": "Para leer más sobre este tema,|ESCANEE EL CÓDIGO QR."
+      }
+    }
+  },
+  "logo": {
+    "file": "brand/nms-logo.png",
+    "sha256": "abc1df7128568d0155c14d881288fa25c1ee6de099aa39f40d47674cca7e2c0d"
+  },
+  "screensaver": {
+    "version": "1.1.0.0",
+    "file": "agent/NMS-Awareness.bin",
+    "sha256": "ab6e537fcfabe32d3b392bb9d589269726733ca873db6ba6c6cb347896f667ec"
+  },
+  "agent": {
+    "file": "agent/Sync-NmsAwareness.ps1",
+    "sha256": "430bdff73808f12ecf45e813e91a487bbe4de9bebc588369a571ccc2ebce9d13"
+  },
+  "slides": [
+    {
+      "id": "phishing",
+      "lang": "en",
+      "title": "Think before you click",
+      "bullets": [
+        "Phishing emails pretend to come from someone you trust to steal passwords, money or data.",
+        "Watch for urgency, threats, prizes or anything you were not expecting.",
+        "When in doubt, don't click. Call the sender at a number you already know."
+      ],
+      "art": "envelopes",
+      "artText": [
+        null
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/en/phishing.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "spoofing",
+      "lang": "en",
+      "title": "Spoofing: the name is not the sender",
+      "bullets": [
+        "Anyone can type any display name, like \"Microsoft Support\" or your boss's name.",
+        "Always check the real email address, not just the name.",
+        "Look-alike addresses swap letters: micros0ft.com, rnicrosoft.com, paypa1.com."
+      ],
+      "art": "spoof",
+      "artText": [
+        null
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/en/spoofing.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "bank-change",
+      "lang": "en",
+      "title": "New bank details? Call to verify",
+      "bullets": [
+        "Scammers spoof or hijack vendor emails and send \"new\" bank or wire instructions.",
+        "Never change payment information based only on an email or a PDF.",
+        "Call the vendor at the number on file, not the one in the email."
+      ],
+      "art": "bank",
+      "artText": [
+        null
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/en/bank-change.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "gift-cards",
+      "lang": "en",
+      "title": "Gift card requests are a scam",
+      "bullets": [
+        "\"I'm in a meeting, buy gift cards and send me the codes\" is a classic scam.",
+        "Real managers, companies and government agencies never ask for payment in gift cards.",
+        "Verify in person or by phone before you buy anything."
+      ],
+      "art": "giftcard",
+      "artText": [
+        null
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/en/gift-cards.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "mfa-codes",
+      "lang": "en",
+      "title": "Never share your code",
+      "bullets": [
+        "Verification codes are the last lock on your account. Never read them to anyone.",
+        "No real bank, Microsoft or IT support will ask you for a code.",
+        "Got a sign-in request you didn't start? Deny it and tell NMS."
+      ],
+      "art": "mfa",
+      "artText": [
+        null
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/en/mfa-codes.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "fake-login",
+      "lang": "en",
+      "title": "Check the link before you sign in",
+      "bullets": [
+        "Fake login pages look exactly like Microsoft 365, banks or shipping sites.",
+        "Hover over links and read the real address before you click.",
+        "Sign in only on sites you opened yourself, never from an email link."
+      ],
+      "art": "lock",
+      "artText": [
+        null
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/en/fake-login.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "attachments",
+      "lang": "en",
+      "title": "Unexpected attachment? Don't open it",
+      "bullets": [
+        "Fake invoices, shipping notices and voicemails often hide malware.",
+        "Be extra careful with .zip, .html and .iso files and \"Enable content\" buttons.",
+        "Not expecting it? Confirm with the sender first."
+      ],
+      "art": "attachment",
+      "artText": [
+        null
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/en/attachments.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "fake-fix",
+      "lang": "en",
+      "title": "Fake \"verify\" and \"fix it\" pages",
+      "bullets": [
+        "Some pages ask you to press Windows + R and paste a command to \"verify\" or \"fix\" something.",
+        "That is a trap that installs malware. Close the page.",
+        "Real websites never ask you to run commands on your computer."
+      ],
+      "art": "warning",
+      "artText": [
+        null
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/en/fake-fix.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "texts-calls",
+      "lang": "en",
+      "title": "Texts and calls can be scams too",
+      "bullets": [
+        "Fake texts about packages, tolls or bank alerts push you to a link.",
+        "Caller ID can be faked. Hang up and call the official number.",
+        "Never give passwords, codes or card numbers over the phone."
+      ],
+      "art": "phone",
+      "artText": [
+        null
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/en/texts-calls.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "report-it",
+      "lang": "en",
+      "title": "Something looks wrong? Report it",
+      "bullets": [
+        "Use the Report button in Outlook, or call NMS. Don't forward it to coworkers.",
+        "Clicked something by mistake? Tell us right away. Minutes matter.",
+        "You will never get in trouble for reporting."
+      ],
+      "art": "shield",
+      "artText": [
+        null
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/en/report-it.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    },
+    {
+      "id": "passwords",
+      "lang": "en",
+      "title": "Use strong, unique passwords",
+      "bullets": [
+        "Use a passphrase: four or more random words, 16 characters or longer.",
+        "Never reuse your work password anywhere else.",
+        "Use a password manager and turn on multi-factor authentication."
+      ],
+      "art": "password",
+      "artText": [
+        null
+      ],
+      "url": "https://willy-nms.github.io/nms-awareness/learn/en/passwords.html",
+      "clients": "*",
+      "exclude": [
+        null
+      ],
+      "from": "",
+      "to": "",
+      "image": null
+    }
+  ]
+}

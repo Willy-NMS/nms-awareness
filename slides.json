@@ -1,0 +1,170 @@
+{
+  "settings": {
+    "slideSeconds": 15,
+    "company": "Network Management Solutions",
+    "phone": "305-477-0757",
+    "website": "networkms.com",
+    "labels": {
+      "en": { "call": "Questions? Call NMS", "scan": "To read more about this topic,|SCAN THE QR CODE." },
+      "es": { "call": "¿Preguntas? Llame a NMS", "scan": "Para leer más sobre este tema,|ESCANEE EL CÓDIGO QR." }
+    }
+  },
+  "slides": [
+    {
+      "id": "phishing", "lang": "en", "art": "envelopes",
+      "title": "Think before you click",
+      "bullets": [
+        "Phishing emails pretend to come from someone you trust to steal passwords, money or data.",
+        "Watch for urgency, threats, prizes or anything you were not expecting.",
+        "When in doubt, don't click. Call the sender at a number you already know."
+      ],
+      "more": [
+        "Phishing is the most common way attackers get into a business. The message looks like it comes from Microsoft, a bank, a shipping company, a vendor or even a coworker.",
+        "Red flags: a sense of urgency (\"your account will be closed today\"), a request for a password or payment, a link that does not match the company, bad grammar, or an attachment you did not expect.",
+        "If something feels off, stop. Do not click links or open attachments. Contact the person or company using a phone number or website you already trust, or call NMS."
+      ]
+    },
+    {
+      "id": "spoofing", "lang": "en", "art": "spoof",
+      "title": "Spoofing: the name is not the sender",
+      "bullets": [
+        "Anyone can type any display name, like \"Microsoft Support\" or your boss's name.",
+        "Always check the real email address, not just the name.",
+        "Look-alike addresses swap letters: micros0ft.com, rnicrosoft.com, paypa1.com."
+      ],
+      "more": [
+        "Spoofing is when a scammer makes a message look like it comes from someone else. The most common trick is the display name: the email shows \"Microsoft 365 Support\" or your manager's name, but the real address behind it is a stranger's Gmail or a fake domain.",
+        "Look-alike domains change one character so it looks right at a glance: a zero instead of an O (micros0ft.com), \"rn\" instead of \"m\" (rnicrosoft.com), a 1 instead of an L (paypa1.com), or extra words (microsoft-alerts.co).",
+        "On a phone, tap the sender's name to see the full address. On a computer, hover over the name. Also check the Reply-To: if you reply and the address changes, it is a scam.",
+        "Phone numbers and text messages can be spoofed too. A call that shows your bank's name is not proof it is your bank."
+      ]
+    },
+    {
+      "id": "bank-change", "lang": "en", "art": "bank",
+      "title": "New bank details? Call to verify",
+      "bullets": [
+        "Scammers spoof or hijack vendor emails and send \"new\" bank or wire instructions.",
+        "Never change payment information based only on an email or a PDF.",
+        "Call the vendor at the number on file, not the one in the email."
+      ],
+      "more": [
+        "This scam is called Business Email Compromise (BEC). A criminal gets into a vendor's or client's mailbox, or makes a look-alike address, and waits for a real invoice. Then they send a message saying the bank account has changed.",
+        "The email looks normal, uses the right names and may continue a real conversation. The only change is where the money goes. Once a wire or ACH is sent, it is very hard to get back.",
+        "Rule: any change to bank details, any urgent wire, or any payment to a new account is confirmed by phone, using a number you already had on file, before money moves."
+      ]
+    },
+    {
+      "id": "gift-cards", "lang": "en", "art": "giftcard",
+      "title": "Gift card requests are a scam",
+      "bullets": [
+        "\"I'm in a meeting, buy gift cards and send me the codes\" is a classic scam.",
+        "Real managers, companies and government agencies never ask for payment in gift cards.",
+        "Verify in person or by phone before you buy anything."
+      ],
+      "more": [
+        "The message usually looks like it comes from the owner or a manager, by email or text: \"Are you busy? I need a favor.\" Then it asks you to buy gift cards for a client or an event and send pictures of the codes.",
+        "Once the codes are sent, the money is gone. Gift cards can't be traced or refunded.",
+        "If you get a request like this, do not reply to the message. Call the person at the number you know or ask them in person."
+      ]
+    },
+    {
+      "id": "mfa-codes", "lang": "en", "art": "mfa",
+      "title": "Never share your code",
+      "bullets": [
+        "Verification codes are the last lock on your account. Never read them to anyone.",
+        "No real bank, Microsoft or IT support will ask you for a code.",
+        "Got a sign-in request you didn't start? Deny it and tell NMS."
+      ],
+      "more": [
+        "Multi-factor authentication (MFA) sends a code or an approval request to your phone. If a scammer already has your password, that code is the only thing stopping them.",
+        "Scammers call pretending to be your bank or IT support and say they will \"send you a code to verify you\". If you read it to them, they are in your account.",
+        "If your phone asks you to approve a sign-in that you did not start, someone has your password. Tap Deny, then call NMS so we can change it."
+      ]
+    },
+    {
+      "id": "fake-login", "lang": "en", "art": "lock",
+      "title": "Check the link before you sign in",
+      "bullets": [
+        "Fake login pages look exactly like Microsoft 365, banks or shipping sites.",
+        "Hover over links and read the real address before you click.",
+        "Sign in only on sites you opened yourself, never from an email link."
+      ],
+      "more": [
+        "A phishing link takes you to a copy of a real login page. Everything looks the same, but the password you type goes to the attacker.",
+        "Before you click, hover over the link (or press and hold on a phone) and read the address. The real company name must be right before the first single slash, for example login.microsoftonline.com, not microsoft.login-secure.co.",
+        "The lock icon (HTTPS) only means the connection is encrypted. Fake sites have it too. The address is what matters.",
+        "Safest habit: open the site yourself from a bookmark or by typing the address."
+      ]
+    },
+    {
+      "id": "attachments", "lang": "en", "art": "attachment",
+      "title": "Unexpected attachment? Don't open it",
+      "bullets": [
+        "Fake invoices, shipping notices and voicemails often hide malware.",
+        "Be extra careful with .zip, .html and .iso files and \"Enable content\" buttons.",
+        "Not expecting it? Confirm with the sender first."
+      ],
+      "more": [
+        "Attackers attach files that look like invoices, purchase orders, scanned documents, voicemails or shipping labels. Opening them can install malware or ransomware.",
+        "Higher risk files: .zip, .iso, .html or .htm, .js, .exe, and Office documents that ask you to click \"Enable Content\" or \"Enable Editing\".",
+        "If you were not expecting a file, check with the sender by phone or a new message before opening it."
+      ]
+    },
+    {
+      "id": "fake-fix", "lang": "en", "art": "warning",
+      "title": "Fake \"verify\" and \"fix it\" pages",
+      "bullets": [
+        "Some pages ask you to press Windows + R and paste a command to \"verify\" or \"fix\" something.",
+        "That is a trap that installs malware. Close the page.",
+        "Real websites never ask you to run commands on your computer."
+      ],
+      "more": [
+        "A growing scam shows a fake CAPTCHA (\"Verify you are human\") or a fake error message with steps: press Windows + R, press Ctrl + V, press Enter. The page has already copied a malicious command to your clipboard.",
+        "Following the steps runs the attacker's program with your permissions. No real website, CAPTCHA or browser update works this way.",
+        "If you see this, close the browser tab. If you already ran it, disconnect from the network and call NMS right away."
+      ]
+    },
+    {
+      "id": "texts-calls", "lang": "en", "art": "phone",
+      "title": "Texts and calls can be scams too",
+      "bullets": [
+        "Fake texts about packages, tolls or bank alerts push you to a link.",
+        "Caller ID can be faked. Hang up and call the official number.",
+        "Never give passwords, codes or card numbers over the phone."
+      ],
+      "more": [
+        "Smishing (SMS phishing) and vishing (voice phishing) use the same tricks as email: urgency and a link or a number to call.",
+        "Common examples: a package on hold, an unpaid toll, a locked bank card, a refund, or \"Microsoft support\" saying your computer is infected.",
+        "Do not use the link or number in the message. Hang up and call the company using the number on its official website or on the back of your card."
+      ]
+    },
+    {
+      "id": "report-it", "lang": "en", "art": "shield",
+      "title": "Something looks wrong? Report it",
+      "bullets": [
+        "Use the Report button in Outlook, or call NMS. Don't forward it to coworkers.",
+        "Clicked something by mistake? Tell us right away. Minutes matter.",
+        "You will never get in trouble for reporting."
+      ],
+      "more": [
+        "Reporting a suspicious message helps protect everyone in the company. In Outlook, use Report > Phishing (or Report Message). If you are not sure, call NMS.",
+        "If you clicked a link, typed your password or opened an attachment, call us immediately. The sooner we know, the faster we can lock the account and stop the damage.",
+        "Nobody gets in trouble for reporting, even if it turns out to be safe."
+      ]
+    },
+    {
+      "id": "passwords", "lang": "en", "art": "password",
+      "title": "Use strong, unique passwords",
+      "bullets": [
+        "Use a passphrase: four or more random words, 16 characters or longer.",
+        "Never reuse your work password anywhere else.",
+        "Use a password manager and turn on multi-factor authentication."
+      ],
+      "more": [
+        "Long passphrases are easier to remember and harder to crack than short complex passwords. Example of the idea: four unrelated words with a number or symbol.",
+        "When a website is hacked, criminals try the same email and password on other sites. A unique password for each account stops that.",
+        "A password manager remembers them for you. Multi-factor authentication adds a second lock in case a password leaks."
+      ]
+    }
+  ]
+}
