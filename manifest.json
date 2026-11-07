@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-06.2012",
+  "version": "2026-11-06.2017",
   "settings": {
     "slideSeconds": 15,
     "company": "Network Management Solutions",
@@ -8,7 +8,8 @@
     "languages": {
       "*": "en",
       "Ace Home Health Care": "es",
-      "Ace Home Healthcare": "es"
+      "Ace Home Healthcare": "es",
+      "Mollinea Insurance": "es"
     },
     "labels": {
       "en": {
@@ -28,7 +29,7 @@
   "screensaver": {
     "version": "1.1.0.0",
     "file": "agent/NMS-Awareness.bin",
-    "sha256": "c23dca2b842dc442bc80f658f1fc6124578095c79afa1787da9e1e56e6185817"
+    "sha256": "1cc4134edbd16a06fca8334622d345532364930f8948cfe60bc6da8481f90798"
   },
   "agent": {
     "file": "agent/Sync-NmsAwareness.ps1",
