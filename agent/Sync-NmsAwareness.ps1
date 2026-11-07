@@ -11,7 +11,7 @@
   5. Applies the screensaver policy to every signed-in user (HKU\<SID>\Software\Policies\...).
   If the site can't be reached, the slides already on disk keep working.
 #>
-param([switch]$PolicyOnly, [switch]$NoPolicy)
+param([switch]$PolicyOnly, [switch]$NoPolicy, [switch]$IfPending)
 
 $ErrorActionPreference = 'Stop'
 $Root  = if ($env:NMS_AWARENESS_ROOT) { $env:NMS_AWARENESS_ROOT } else { Join-Path $env:ProgramData 'NMS\Awareness' }
@@ -79,6 +79,25 @@ function Set-UserPolicy($cfg) {
 
 # Task that runs in each signed-in user's session and pushes the policy into the live session
 # (Windows otherwise reads it only at sign-in).
+function Register-UnlockTask {
+    # SYSTEM task: when any user unlocks the computer, re-apply the settings if the last try failed.
+    try {
+        $tp = '\NMS\'; $tn = 'NMS Awareness Unlock'
+        if (Get-ScheduledTask -TaskPath $tp -TaskName $tn -ErrorAction SilentlyContinue) { return }
+        $self = Join-Path $Root 'Sync-NmsAwareness.ps1'
+        $ps = "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe"
+        $action = New-ScheduledTaskAction -Execute $ps -Argument "-NoProfile -NonInteractive -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$self`" -PolicyOnly -IfPending"
+        $class = Get-CimClass -Namespace 'Root/Microsoft/Windows/TaskScheduler' -ClassName 'MSFT_TaskSessionStateChangeTrigger'
+        $trig = New-CimInstance -CimClass $class -ClientOnly
+        $trig.StateChange = 8; $trig.Delay = 'PT15S'; $trig.Enabled = $true      # 8 = session unlock
+        $pr = New-ScheduledTaskPrincipal -UserId 'SYSTEM' -LogonType ServiceAccount -RunLevel Highest
+        $set = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -ExecutionTimeLimit (New-TimeSpan -Minutes 5) -MultipleInstances IgnoreNew
+        Register-ScheduledTask -TaskPath $tp -TaskName $tn -Action $action -Trigger $trig -Principal $pr -Settings $set `
+            -Description 'NMS Security Awareness: applies the screensaver settings when a user unlocks the computer.' -Force | Out-Null
+        Write-Log 'unlock task registered'
+    } catch { Write-Log "unlock task failed: $($_.Exception.Message)" }
+}
+
 function Invoke-SessionApply {
     try {
         $tp = '\NMS\'; $tn = 'NMS Awareness Apply'
@@ -106,6 +125,11 @@ function Invoke-SessionApply {
         Start-Sleep -Seconds 1
         $info = Get-ScheduledTaskInfo -TaskPath $tp -TaskName $tn
         Write-Log "session apply: result $($info.LastTaskResult)"
+        # A locked session can't take the settings: retry when the user unlocks.
+        $pending = Join-Path $Root 'apply-pending'
+        if ($info.LastTaskResult -eq 0) { Remove-Item $pending -Force -ErrorAction SilentlyContinue }
+        else { Set-Content -Path $pending -Value (Get-Date).ToString('s') -ErrorAction SilentlyContinue }
+        Register-UnlockTask
     } catch { Write-Log "session apply failed: $($_.Exception.Message)" }
 }
 
@@ -162,6 +186,7 @@ function Set-PowerMinimums($p) {
 try {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     $cfg = Get-Content (Join-Path $Root 'config.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+    if ($IfPending -and -not (Test-Path (Join-Path $Root 'apply-pending'))) { exit 0 }
     if ($PolicyOnly) { Set-UserPolicy $cfg; exit 0 }
     New-Item -ItemType Directory -Force $Cache | Out-Null
 

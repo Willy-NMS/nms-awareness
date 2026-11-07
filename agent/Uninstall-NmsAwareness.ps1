@@ -9,7 +9,7 @@ $Root = Join-Path $env:ProgramData 'NMS\Awareness'
 $rel = 'Software\Policies\Microsoft\Windows\Control Panel\Desktop'
 $names = 'ScreenSaveActive', 'ScreenSaverIsSecure', 'ScreenSaveTimeOut', 'SCRNSAVE.EXE'
 
-foreach ($tn in 'NMS Awareness Sync', 'NMS Awareness Apply') { Unregister-ScheduledTask -TaskName $tn -TaskPath '\NMS\' -Confirm:$false -ErrorAction SilentlyContinue }
+foreach ($tn in 'NMS Awareness Sync', 'NMS Awareness Apply', 'NMS Awareness Unlock') { Unregister-ScheduledTask -TaskName $tn -TaskPath '\NMS\' -Confirm:$false -ErrorAction SilentlyContinue }
 Get-Process -Name 'NMS-Awareness*' -ErrorAction SilentlyContinue | Stop-Process -Force
 
 function Clear-Policy([string]$hiveRoot) {
