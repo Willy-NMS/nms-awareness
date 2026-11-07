@@ -1,5 +1,5 @@
 {
-    "version":  "2026-11-07.0849",
+    "version":  "2026-11-07.0910",
     "settings":  {
                      "slideSeconds":  15,
                      "company":  "Network Management Solutions",
@@ -20,7 +20,8 @@
                                        "Ace Home Health Care":  "es",
                                        "Ace Home Healthcare":  "es",
                                        "Mollinea Insurance":  "es",
-                                       "Century Metals Puerto Rico":  "es"
+                                       "Century Metals Puerto Rico":  "es",
+                                       "Best Roof Metals":  "es"
                                    },
                      "labels":  {
                                     "en":  {
@@ -40,7 +41,7 @@
     "screensaver":  {
                         "version":  "1.2.0.0",
                         "file":  "agent/NMS-Awareness.bin",
-                        "sha256":  "ca186aac6be7ce2ca082f6f7d333b46998cf5b01cd2c5f7da2c8769e1a16a4f8"
+                        "sha256":  "e1ee8ee3c50311ec02c2438bcc469d457cc196d20de630d9a2768ae275153913"
                     },
     "agent":  {
                   "file":  "agent/Sync-NmsAwareness.ps1",
