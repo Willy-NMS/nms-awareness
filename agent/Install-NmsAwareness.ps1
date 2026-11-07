@@ -38,7 +38,12 @@ if ($os.ProductType -ne 1 -and -not $env:allowServers) { Write-Output "Skipped: 
 $Root = Join-Path $env:ProgramData 'NMS\Awareness'
 New-Item -ItemType Directory -Force (Join-Path $Root 'cache') | Out-Null
 # Only SYSTEM and Administrators can change the files; users can read and run them.
-& icacls.exe $Root /inheritance:r /grant:r '*S-1-5-18:(OI)(CI)F' '*S-1-5-32-544:(OI)(CI)F' '*S-1-5-32-545:(OI)(CI)RX' /T /C /Q | Out-Null
+# Take ownership first and reset the files to inherit from the folder (a file left with its own ACL
+# from an earlier install would otherwise block the update with "Access denied").
+& takeown.exe /F $Root /R /A /D Y 2>&1 | Out-Null
+& icacls.exe $Root /inheritance:r /grant:r '*S-1-5-18:(OI)(CI)F' '*S-1-5-32-544:(OI)(CI)F' '*S-1-5-32-545:(OI)(CI)RX' /C /Q | Out-Null
+& icacls.exe "$Root\*" /reset /T /C /Q 2>&1 | Out-Null
+Get-ChildItem $Root -Recurse -Force -File -ErrorAction SilentlyContinue | Where-Object { $_.IsReadOnly } | ForEach-Object { $_.IsReadOnly = $false }
 
 $cfg = [ordered]@{
     baseUrl = $BaseUrl; client = $Client; lang = $Language
