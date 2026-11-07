@@ -82,21 +82,28 @@ function Set-UserPolicy($cfg) {
 function Invoke-SessionApply {
     try {
         $tp = '\NMS\'; $tn = 'NMS Awareness Apply'
+        # Task Scheduler can't launch a .scr ("file not found"); use an .exe copy of the same program.
+        $App = Join-Path $Root 'NMS-Awareness-Apply.exe'
+        if (-not (Test-Path $App) -or (Get-Sha256 $App) -ne (Get-Sha256 $Scr)) { Copy-Item $Scr $App -Force }
         $t = Get-ScheduledTask -TaskPath $tp -TaskName $tn -ErrorAction SilentlyContinue
-        if (-not $t -or $t.Actions[0].Execute -ne $Scr) {
+        if (-not $t -or $t.Actions[0].Execute -ne $App) {
             $users = (New-Object System.Security.Principal.SecurityIdentifier('S-1-5-32-545')).Translate([System.Security.Principal.NTAccount]).Value
-            $action = New-ScheduledTaskAction -Execute $Scr -Argument '/apply'
+            $action = New-ScheduledTaskAction -Execute $App -Argument '/apply' -WorkingDirectory $Root
             $trig = New-ScheduledTaskTrigger -AtLogOn; $trig.Delay = 'PT1M'
             $pr = New-ScheduledTaskPrincipal -GroupId $users -RunLevel Limited
             $set = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -ExecutionTimeLimit (New-TimeSpan -Minutes 2) -MultipleInstances IgnoreNew
             Register-ScheduledTask -TaskPath $tp -TaskName $tn -Action $action -Trigger $trig -Principal $pr -Settings $set `
                 -Description 'NMS Security Awareness: applies the screensaver settings to the signed-in session.' -Force | Out-Null
         }
+        $before = (Get-ScheduledTaskInfo -TaskPath $tp -TaskName $tn).LastRunTime
         Start-ScheduledTask -TaskPath $tp -TaskName $tn
+        # Wait until this run has started and finished (the policy must stay lifted while it runs).
         for ($i = 0; $i -lt 30; $i++) {
             Start-Sleep -Seconds 1
-            if ((Get-ScheduledTask -TaskPath $tp -TaskName $tn).State -ne 'Running') { break }
+            $ran = (Get-ScheduledTaskInfo -TaskPath $tp -TaskName $tn).LastRunTime -ne $before
+            if ($ran -and (Get-ScheduledTask -TaskPath $tp -TaskName $tn).State -ne 'Running') { break }
         }
+        Start-Sleep -Seconds 1
         $info = Get-ScheduledTaskInfo -TaskPath $tp -TaskName $tn
         Write-Log "session apply: result $($info.LastTaskResult)"
     } catch { Write-Log "session apply failed: $($_.Exception.Message)" }
