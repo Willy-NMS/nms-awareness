@@ -48,6 +48,16 @@ function Write-TextAtomic([string]$path, [string[]]$lines) {
 function Set-UserPolicy($cfg) {
     if (-not (Test-Path $Scr)) { Write-Log 'policy: screensaver file not present yet, skipped'; return }
     $timeout = [string]([int]$cfg.timeoutSec)
+    # Central list in the manifest (minutes by NinjaOne organization, '*' = everyone else) wins over the install value.
+    try {
+        $mf = Join-Path $Root 'manifest.json'
+        $tm = if (Test-Path $mf) { (Get-Content $mf -Raw -Encoding UTF8 | ConvertFrom-Json).settings.timeouts } else { $null }
+        if ($tm) {
+            $hit = $tm.PSObject.Properties | Where-Object { $_.Name -eq [string]$cfg.client } | Select-Object -First 1
+            if (-not $hit) { $hit = $tm.PSObject.Properties | Where-Object { $_.Name -eq '*' } | Select-Object -First 1 }
+            if ($hit -and [int]$hit.Value -gt 0) { $timeout = [string]([int]$hit.Value * 60) }
+        }
+    } catch { Write-Log "timeouts list ignored: $($_.Exception.Message)" }
     $secure  = if ($cfg.secure -eq $false) { '0' } else { '1' }
     $names = 'ScreenSaveActive', 'ScreenSaverIsSecure', 'ScreenSaveTimeOut', 'SCRNSAVE.EXE'
     $sids = @(Get-ChildItem Registry::HKEY_USERS | Where-Object { $_.PSChildName -match '^S-1-(5-21|12-1)-[\d-]+$' } | ForEach-Object { $_.PSChildName })

@@ -1,5 +1,5 @@
 {
-    "version":  "2026-11-07.0910",
+    "version":  "2026-11-07.0951",
     "settings":  {
                      "slideSeconds":  15,
                      "company":  "Network Management Solutions",
@@ -15,6 +15,12 @@
                                    "dcHibernate":  0,
                                    "lidAction":  0
                                },
+                     "timeouts":  {
+                                      "*":  5,
+                                      "Express Roofing Supply 1":  30,
+                                      "Express Roofing Supply 2":  30,
+                                      "Express Roofing Supply Corp.":  30
+                                  },
                      "languages":  {
                                        "*":  "en",
                                        "Ace Home Health Care":  "es",
@@ -41,11 +47,11 @@
     "screensaver":  {
                         "version":  "1.2.0.0",
                         "file":  "agent/NMS-Awareness.bin",
-                        "sha256":  "e1ee8ee3c50311ec02c2438bcc469d457cc196d20de630d9a2768ae275153913"
+                        "sha256":  "19ec8bb6b76400d0a88f5a09a2a27d0bbc00eb81676103242c7634791434a7de"
                     },
     "agent":  {
                   "file":  "agent/Sync-NmsAwareness.ps1",
-                  "sha256":  "1ac87216bd6c8ef82eb435d8648e1979655e62f2c1b63c249ecb7813317ca6c0"
+                  "sha256":  "c221eb7d6ea810c7f0f108b4cf7c9980898b2c99321f4c749c06600e27ec7353"
               },
     "slides":  [
                    {
