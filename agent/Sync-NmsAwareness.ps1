@@ -120,7 +120,8 @@ function Set-PowerMinimums($p) {
     try {
         $items = @(
             @{ sub = $video; set = $vidIdle; ac = 'acDisplay'; dc = 'dcDisplay'; label = 'display' },
-            @{ sub = $sleep; set = $slpIdle; ac = 'acSleep'; dc = 'dcSleep'; label = 'sleep' })
+            @{ sub = $sleep; set = $slpIdle; ac = 'acSleep'; dc = 'dcSleep'; label = 'sleep' },
+            @{ sub = $sleep; set = '9d7815a6-7ee4-497e-8888-515a05f02364'; ac = 'acHibernate'; dc = 'dcHibernate'; label = 'hibernate' })
         foreach ($it in $items) {
             # The last two hex values in the output are the current AC and DC values (works in any Windows language).
             $hex = @(& powercfg.exe /q SCHEME_CURRENT $it.sub $it.set | Select-String ':\s*0x([0-9a-fA-F]+)\s*$' |
@@ -133,7 +134,9 @@ function Set-PowerMinimums($p) {
                 $now = $cur[$mode]
                 $set = $false
                 if ($want -eq 0) { $set = ($now -ne 0) }                  # policy says never
-                elseif ($now -ne 0 -and $now -lt $want) { $set = $true }  # too short: raise it
+                elseif ($now -eq 0) { $set = $false }                     # "never" on the computer stays (e.g. camera screens)
+                elseif ($p.exact) { $set = ($now -ne $want) }             # exact: same time on every computer
+                elseif ($now -lt $want) { $set = $true }                  # minimum: raise a short time
                 if ($set) {
                     $sw = if ($mode -eq 'ac') { '/setacvalueindex' } else { '/setdcvalueindex' }
                     & powercfg.exe $sw SCHEME_CURRENT $it.sub $it.set $want | Out-Null

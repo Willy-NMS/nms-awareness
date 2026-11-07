@@ -1,15 +1,18 @@
 {
-    "version":  "2026-11-07.0836",
+    "version":  "2026-11-07.0840",
     "settings":  {
                      "slideSeconds":  15,
                      "company":  "Network Management Solutions",
                      "phone":  "305-477-0757",
                      "website":  "networkms.com",
                      "power":  {
-                                   "acDisplay":  20,
-                                   "acSleep":  30,
+                                   "exact":  true,
+                                   "acDisplay":  60,
+                                   "acSleep":  0,
+                                   "acHibernate":  0,
                                    "dcDisplay":  20,
-                                   "dcSleep":  0
+                                   "dcSleep":  0,
+                                   "dcHibernate":  0
                                },
                      "languages":  {
                                        "*":  "en",
@@ -36,11 +39,11 @@
     "screensaver":  {
                         "version":  "1.2.0.0",
                         "file":  "agent/NMS-Awareness.bin",
-                        "sha256":  "66fb9800e7b2e0003b37ee871c11c76bdf22aa0c2fb1e35759c6d45b7f6ffad8"
+                        "sha256":  "e439baed0ce5b5501a504f1e598672d68e5cf6f97e5add28f267328385623b78"
                     },
     "agent":  {
                   "file":  "agent/Sync-NmsAwareness.ps1",
-                  "sha256":  "8de5796bbcdc97683643a48c69ea5c04248400d7967cd9ad08704b1d81336545"
+                  "sha256":  "a47b04abaeee2c26a6ed9c379ca27d40fb1b9fbf8a4737009b0d4c38fd6b10ac"
               },
     "slides":  [
                    {
