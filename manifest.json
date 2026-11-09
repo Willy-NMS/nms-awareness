@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-07.1801",
+  "version": "2026-11-09.0620",
   "settings": {
     "slideSeconds": 15,
     "company": "Network Management Solutions",
@@ -10,7 +10,7 @@
       "acDisplay": 60,
       "acSleep": 0,
       "acHibernate": 0,
-      "dcDisplay": 20,
+      "dcDisplay": 30,
       "dcSleep": 0,
       "dcHibernate": 0,
       "lidAction": 0
@@ -27,7 +27,7 @@
       }
     },
     "timeouts": {
-      "*": 5,
+      "*": 20,
       "Express Roofing Supply 1": 30,
       "Express Roofing Supply 2": 30,
       "Express Roofing Supply Corp.": 30,
@@ -59,7 +59,7 @@
   "screensaver": {
     "version": "1.2.0.0",
     "file": "agent/NMS-Awareness.bin",
-    "sha256": "e905afff06629d3b125fdc518184291655e91d434c7fa1260ee648a439d933d8"
+    "sha256": "a7a3967a2543d5113f1aed0d12f2ba74e3768ecf6ed3d73101bcd13e15a50060"
   },
   "agent": {
     "file": "agent/Sync-NmsAwareness.ps1",
