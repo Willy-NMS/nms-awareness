@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-09.0620",
+  "version": "2026-11-09.1213",
   "settings": {
     "slideSeconds": 15,
     "company": "Network Management Solutions",
@@ -59,11 +59,11 @@
   "screensaver": {
     "version": "1.2.0.0",
     "file": "agent/NMS-Awareness.bin",
-    "sha256": "a7a3967a2543d5113f1aed0d12f2ba74e3768ecf6ed3d73101bcd13e15a50060"
+    "sha256": "20e46c58deec6079e54aae6b04de9c5caa8afa52b3137558420b01f7caa33deb"
   },
   "agent": {
     "file": "agent/Sync-NmsAwareness.ps1",
-    "sha256": "0ede2bf57e780316d8aa0fd5f942ffa8c26ab7ec929b6bedb31d47f770c1db1f"
+    "sha256": "d148c6b19dbda5552706c09e6cd6da791d96d996e96cae69f9ff2315c1d555f0"
   },
   "slides": [
     {

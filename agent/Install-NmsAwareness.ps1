@@ -27,7 +27,7 @@ param(
 $ErrorActionPreference = 'Stop'
 if (-not $BaseUrl) { $BaseUrl = 'https://willy-nms.github.io/nms-awareness/' }
 if (-not $Language) { $Language = 'en' }
-if ($TimeoutMinutes -le 0) { $TimeoutMinutes = if ($env:timeoutMinutes) { [int]$env:timeoutMinutes } else { 5 } }
+if ($TimeoutMinutes -le 0) { $TimeoutMinutes = if ($env:timeoutMinutes) { [int]$env:timeoutMinutes } else { 20 } }
 $secure = -not ($RequirePassword -match '^(0|false|no)$')
 $Language = $Language.ToLowerInvariant()
 if (-not $Client) { $Client = $env:NINJA_ORGANIZATION_NAME }   # NinjaOne sets this for every script

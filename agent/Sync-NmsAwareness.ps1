@@ -69,10 +69,33 @@ function Set-UserPolicy($cfg) {
 
     # 1. Windows reads the policy only at sign-in and refuses live changes while it exists,
     #    so lift it for a few seconds, 2. push the values into the live session, 3. put it back.
+    $prevFile = Join-Path $Root 'last-timeout.txt'
+    $prev = if (Test-Path $prevFile) { (Get-Content $prevFile -Raw).Trim() } else { '' }
     foreach ($sid in $sids) {
         $k = "Registry::HKEY_USERS\$sid\Software\Policies\Microsoft\Windows\Control Panel\Desktop"
-        if (Test-Path $k) { foreach ($n in $names) { Remove-ItemProperty -Path $k -Name $n -ErrorAction SilentlyContinue } }
+        if (Test-Path $k) {
+            # Someone else (e.g. a domain GPO) changed the value since our last run: say so.
+            $cur = (Get-ItemProperty -Path $k -Name 'ScreenSaveTimeOut' -ErrorAction SilentlyContinue).ScreenSaveTimeOut
+            if ($cur -and $prev -and $cur -ne $prev) { Write-Log "check: user $sid had ScreenSaveTimeOut=$cur set by another policy (GPO?)" }
+            foreach ($n in $names) { Remove-ItemProperty -Path $k -Name $n -ErrorAction SilentlyContinue }
+        }
+        # The user's own value too, so the setting is the same with or without the policy.
+        $u = "Registry::HKEY_USERS\$sid\Control Panel\Desktop"
+        if (Test-Path $u) { New-ItemProperty -Path $u -Name 'ScreenSaveTimeOut' -Value $timeout -PropertyType String -Force | Out-Null }
     }
+    Set-Content -Path $prevFile -Value $timeout -ErrorAction SilentlyContinue
+    # Windows "Machine inactivity limit" locks the computer on its own; never shorter than the screensaver.
+    try {
+        $sys = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
+        $ina = (Get-ItemProperty -Path $sys -Name 'InactivityTimeoutSecs' -ErrorAction SilentlyContinue).InactivityTimeoutSecs
+        if ($ina -and [int]$ina -gt 0 -and [int]$ina -lt [int]$timeout) {
+            New-ItemProperty -Path $sys -Name 'InactivityTimeoutSecs' -Value ([int]$timeout) -PropertyType DWord -Force | Out-Null
+            Write-Log "lock: machine inactivity limit ${ina}s -> ${timeout}s"
+        }
+        $mdm = (Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\PolicyManager\current\device\DeviceLock' -Name 'MaxInactivityTimeDeviceLock' -ErrorAction SilentlyContinue).MaxInactivityTimeDeviceLock
+        if ($mdm) { Write-Log "check: Intune/MDM device lock after $mdm min" }
+        if ((Get-CimInstance Win32_ComputerSystem).PartOfDomain) { Write-Log 'check: computer is in an AD domain (a GPO may also set the screensaver)' }
+    } catch { Write-Log "lock check failed: $($_.Exception.Message)" }
     Invoke-SessionApply
     foreach ($sid in $sids) {
         $k = "Registry::HKEY_USERS\$sid\Software\Policies\Microsoft\Windows\Control Panel\Desktop"
@@ -87,6 +110,7 @@ function Set-UserPolicy($cfg) {
         New-ItemProperty -Path $s -Name 'NoDispScrSavPage' -Value 1 -PropertyType DWord -Force | Out-Null
     }
     Write-Log "policy: applied to $($sids.Count) signed-in user(s), timeout ${timeout}s, password on resume=$secure, settings locked"
+    if (Test-Path (Join-Path $Root 'apply-pending')) { Write-Log 'policy: the open session takes the new time when the user unlocks or signs in again' }
 }
 
 # Task that runs in each signed-in user's session and pushes the policy into the live session
