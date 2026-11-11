@@ -6,7 +6,7 @@
     "website": "networkms.com",
     "power": { "exact": true, "acDisplay": 60, "acSleep": 0, "acHibernate": 0, "dcDisplay": 30, "dcSleep": 0, "dcHibernate": 0, "lidAction": 0 },
     "powerByClient": { "Express Roofing Supply 1": { "dcDisplay": 40 }, "Express Roofing Supply 2": { "dcDisplay": 40 }, "Express Roofing Supply Corp.": { "dcDisplay": 40 } },
-    "timeouts": { "*": 20, "Express Roofing Supply 1": 30, "Express Roofing Supply 2": 30, "Express Roofing Supply Corp.": 30, "host:CHRISTIAN-LAPT": 30 },
+    "timeouts": { "*": 20, "Express Roofing Supply 1": 30, "Express Roofing Supply 2": 30, "Express Roofing Supply Corp.": 30, "host:CHRISTIAN-LAPT": 30, "host:CMMP-CTL1": 150, "host:CMM-Slitter": 150, "host:CMMPackinLine": 150, "host:CMMP-Vicente": 150, "host:CMMO-MCastillo": 150 },
     "languages": { "*": "en", "Ace Home Health Care": "es", "Ace Home Healthcare": "es", "Mollinea Insurance": "es", "Century Metals Puerto Rico": "es", "Best Roof Metals": "es" },
     "labels": {
       "en": { "call": "Questions? Call NMS", "scan": "To read more about this topic,|SCAN THE QR CODE." },

@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-09.1213",
+  "version": "2026-11-11.1420",
   "settings": {
     "slideSeconds": 15,
     "company": "Network Management Solutions",
@@ -31,7 +31,12 @@
       "Express Roofing Supply 1": 30,
       "Express Roofing Supply 2": 30,
       "Express Roofing Supply Corp.": 30,
-      "host:CHRISTIAN-LAPT": 30
+      "host:CHRISTIAN-LAPT": 30,
+      "host:CMMP-CTL1": 150,
+      "host:CMM-Slitter": 150,
+      "host:CMMPackinLine": 150,
+      "host:CMMP-Vicente": 150,
+      "host:CMMO-MCastillo": 150
     },
     "languages": {
       "*": "en",
@@ -59,7 +64,7 @@
   "screensaver": {
     "version": "1.2.0.0",
     "file": "agent/NMS-Awareness.bin",
-    "sha256": "20e46c58deec6079e54aae6b04de9c5caa8afa52b3137558420b01f7caa33deb"
+    "sha256": "acc080ede513c43168f33d28dfac53025c6dc4c798dd49f997decfaf5cfca55f"
   },
   "agent": {
     "file": "agent/Sync-NmsAwareness.ps1",
